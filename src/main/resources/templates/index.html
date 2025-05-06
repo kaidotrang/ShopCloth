@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/layout}">
+<head>
+  <title>Trang chủ</title>
+  <link rel="stylesheet" th:href="@{/css/home.css}">
+</head>
+<body>
+<div layout:fragment="content">
+  <section class="banner">
+    <h2>Chào mừng đến với Shop Quần Áo</h2>
+    <p>Khám phá bộ sưu tập thời trang mới nhất với ưu đãi hấp dẫn!</p>
+    <a th:href="@{/products}" class="btn">Xem sản phẩm</a>
+  </section>
+
+  <section class="categories">
+    <h3>Danh mục nổi bật</h3>
+    <div class="category-list">
+      <!-- Lặp qua danh sách các danh mục -->
+      <div th:each="category : ${categories}" class="category-item">
+        <img th:src="@{${category.picUrl}}" th:alt="${category.title}" />
+        <h4 th:text="${category.title}"></h4>
+        <a th:href="@{/products?t={id}(id=${category.id})}" class="category-link">Xem ngay</a>
+      </div>
+    </div>
+  </section>
+</div>
+</body>
+</html>
+

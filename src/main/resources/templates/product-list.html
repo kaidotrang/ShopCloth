@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/layout}">
+<head>
+    <title>Danh sách sản phẩm</title>
+    <link rel="stylesheet" th:href="@{/css/product-list.css(v=1)}">
+</head>
+<body>
+<div layout:fragment="content">
+    <section class="product-list">
+        <h2>Danh sách sản phẩm</h2>
+        <div class="products">
+            <div th:each="product : ${products}" class="product-item">
+                <img th:src="@{${product.picUrls[0].picUrl}}" alt="Sản phẩm">
+                <h3 th:text="${product.name}"></h3>
+                <p th:text="${product.description}"></p>
+                <p class="price" th:text="${product.variants[0].price}"></p>
+                <a th:href="@{/products/{id}(id=${product.id})}" class="btn">Xem chi tiết</a>
+            </div>
+        </div>
+    </section>
+</div>
+</body>
+</html>
