@@ -1,10 +1,7 @@
 package com.nguyenhuutruong.ShopCloth.controller;
 
 import com.nguyenhuutruong.ShopCloth.model.*;
-import com.nguyenhuutruong.ShopCloth.repository.OrderItemRepository;
-import com.nguyenhuutruong.ShopCloth.repository.OrderRepository;
-import com.nguyenhuutruong.ShopCloth.repository.PaymentRepository;
-import com.nguyenhuutruong.ShopCloth.repository.ProductVariantRepository;
+import com.nguyenhuutruong.ShopCloth.repository.*;
 import com.nguyenhuutruong.ShopCloth.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -31,6 +28,9 @@ public class OrderController {
 
     @Autowired
     private PaymentRepository paymentRepository;
+
+    @Autowired
+    private CartItemRepository cartItemRepository;
 
     @PostMapping("/placeFromProduct/{variantId}")
     public String placeOrderFromProduct(@PathVariable Long variantId,
@@ -116,8 +116,7 @@ public class OrderController {
         User currentUser = userService.findByEmail(email);
 
         // Lấy danh sách các sản phẩm trong giỏ hàng của người dùng
-        // (Ví dụ nếu bạn có service CartService)
-        List<CartItem> cartItems = currentUser.getCartItems(); // hoặc từ cartService.getItemsByUser(currentUser)
+        List<CartItem> cartItems = currentUser.getCartItems(); // hoặc từ cartService nếu có
 
         if (cartItems == null || cartItems.isEmpty()) {
             return "redirect:/cart?empty=true"; // Giỏ hàng trống
@@ -134,7 +133,6 @@ public class OrderController {
         BigDecimal total = cartItems.stream()
                 .map(item -> item.getProductVariant().getPrice().multiply(BigDecimal.valueOf(item.getQuantity())))
                 .reduce(BigDecimal.ZERO, BigDecimal::add);
-
         order.setTotalAmount(total);
         orderRepository.save(order);
 
@@ -148,12 +146,12 @@ public class OrderController {
             orderItemRepository.save(orderItem);
         }
 
-        // Xóa giỏ hàng sau khi tạo đơn hàng
-        cartItems.clear(); // nếu là danh sách từ user
-        // hoặc gọi: cartService.clearCart(currentUser);
+        // XÓA giỏ hàng trong database sau khi đặt hàng thành công
+        cartItemRepository.deleteAll(cartItems);
 
         return "redirect:/order/checkout/" + order.getId();
     }
+
 
 }
 
