@@ -1,8 +1,8 @@
-package com.nguyenhuutruong.ShopCloth.service;
+package com.nguyenhuutruong.ShopCloth.service.impl;
 
 import com.nguyenhuutruong.ShopCloth.model.Category;
 import com.nguyenhuutruong.ShopCloth.repository.CategoryRepository;
-import com.nguyenhuutruong.ShopCloth.service.impl.CategoryService;
+import com.nguyenhuutruong.ShopCloth.service.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

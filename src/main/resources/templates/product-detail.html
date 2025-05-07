@@ -7,6 +7,7 @@
     <title>Chi tiết sản phẩm</title>
     <link rel="stylesheet" th:href="@{/css/product-detail.css}">
 </head>
+
 <body>
 <div layout:fragment="content">
     <section class="product-detail">
@@ -14,16 +15,15 @@
 
         <!-- Hiển thị ảnh sản phẩm -->
         <div class="product-images">
-            <!-- Hiển thị ảnh chính -->
+            <!-- Ảnh chính -->
             <div class="main-image-container">
                 <img th:src="@{${product.picUrls[0].picUrl}}" alt="Ảnh sản phẩm" class="main-image"
                      id="mainImage">
             </div>
 
-            <!-- Thumbnails for image navigation -->
+            <!-- Thumbnails -->
             <div class="thumbnail-container">
                 <div th:each="image : ${product.picUrls}">
-                    <!-- Sử dụng data-attribute để lưu URL của ảnh -->
                     <img th:src="@{${image.picUrl}}"
                          th:attr="data-image-url=${image.picUrl}"
                          alt="Ảnh thumbnail"
@@ -35,47 +35,46 @@
         <div class="product-info">
             <p th:text="${product.description}">Mô tả sản phẩm</p>
 
-            <!-- Hiển thị các variants của sản phẩm -->
+            <!-- Giá sản phẩm (ẩn ban đầu) -->
+            <p id="variant-price" class="product-price" style="display: none;">
+                Giá: <span id="price-value"></span>
+            </p>
+
+            <!-- Variants -->
             <div class="product-variants">
                 <h3>Chọn phiên bản:</h3>
-                <form class="variant-form" method="post">
+                <form class="variant-form" method="post" th:action="@{/cart/add}">
                     <input type="hidden" name="id" th:value="${product.id}"/>
 
-                    <label for="size">Kích cỡ:</label>
-                    <select name="size" id="size" required>
+                    <label for="variant">Chọn phiên bản:</label>
+                    <select name="productVariantId" id="variant" required>
+                        <option value="" disabled selected>-- Chọn phiên bản --</option>
                         <option th:each="variant : ${product.variants}"
-                                th:value="${variant.size}"
-                                th:text="${variant.size}"></option>
-                    </select>
-
-                    <label for="color">Màu sắc:</label>
-                    <select name="color" id="color" required>
-                        <option th:each="variant : ${product.variants}"
-                                th:value="${variant.color}"
-                                th:text="${variant.color}"></option>
+                                th:value="${variant.id}"
+                                th:text="'Size: ' + ${variant.size} + ', Màu: ' + ${variant.color}"
+                                th:attr="data-price=${variant.price}">
+                        </option>
                     </select>
 
                     <label for="quantity">Số lượng:</label>
                     <input type="number" name="quantity" id="quantity" value="1" min="1" max="100" required>
 
                     <!-- Thêm vào giỏ -->
-                    <button type="submit"
-                            formaction="/cart/add"
-                            class="btn add-cart">Thêm vào giỏ hàng
-                    </button>
+                    <button type="submit" class="btn add-cart">Thêm vào giỏ hàng</button>
 
                     <!-- Mua ngay -->
-                    <button type="submit"
-                            formaction="/order/placeFromProduct/{variantId}"
-                            class="btn buy-now">Mua ngay
-                    </button>
+                    <button type="submit" class="btn buy-now">Mua ngay</button>
                 </form>
             </div>
         </div>
     </section>
 </div>
-</body>
+
+<!-- Script -->
 <div layout:fragment="scripts">
     <script th:src="@{/js/product-detail.js}"></script>
 </div>
+
+</body>
 </html>
+

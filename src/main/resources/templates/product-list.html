@@ -15,7 +15,7 @@
                 <img th:src="@{${product.picUrls[0].picUrl}}" alt="Sản phẩm">
                 <h3 th:text="${product.name}"></h3>
                 <p th:text="${product.description}"></p>
-                <p class="price" th:text="${product.variants[0].price}"></p>
+                <p class="price" th:text="${product.variants[0].price} + ' VNĐ'"></p>
                 <a th:href="@{/products/{id}(id=${product.id})}" class="btn">Xem chi tiết</a>
             </div>
         </div>

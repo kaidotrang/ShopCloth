@@ -1,6 +1,6 @@
 package com.nguyenhuutruong.ShopCloth.config;
 
-import com.nguyenhuutruong.ShopCloth.service.CustomUserDetailsService;
+import com.nguyenhuutruong.ShopCloth.service.impl.CustomUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -57,13 +57,13 @@ public class SecurityConfig {
                 .formLogin(form -> form
                         .loginPage("/login")
                         .usernameParameter("email")
-                        .defaultSuccessUrl("/", true)
+                        .defaultSuccessUrl("/", false)
                         .permitAll()
                 )
                 .logout(logout -> logout
-                        .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
-                        .logoutSuccessUrl("/login?logout")
-                        .permitAll()
+                        .logoutRequestMatcher(new AntPathRequestMatcher("/logout")) // Đường dẫn yêu cầu đăng xuất
+                        .logoutSuccessUrl("/") // Sau khi đăng xuất thành công, chuyển về trang chủ
+                        .permitAll() // Cho phép tất cả người dùng truy cập để đăng xuất
                 );
 
         return http.build();

@@ -1,4 +1,4 @@
-package com.nguyenhuutruong.ShopCloth.service;
+package com.nguyenhuutruong.ShopCloth.service.impl;
 
 import com.nguyenhuutruong.ShopCloth.model.User;
 import com.nguyenhuutruong.ShopCloth.repository.UserRepository;

@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/layout}">
+
+<head>
+    <title>Thanh toán</title>
+    <link rel="stylesheet" th:href="@{/css/checkout.css}"/>
+</head>
+
+<body>
+<div layout:fragment="content">
+    <section class="checkout-container">
+        <h2 class="checkout-title">Xác nhận đơn hàng</h2>
+
+        <form th:action="@{'/order/confirm/' + ${order.id}}" method="post" class="checkout-form">
+            <!-- Thông tin giao hàng -->
+            <div class="shipping-info">
+                <h3>Thông tin giao hàng</h3>
+                <label for="address">Địa chỉ:</label>
+                <input type="text" id="address" name="address" placeholder="Nhập địa chỉ nhận hàng" required/>
+
+                <label for="phone">Số điện thoại:</label>
+                <input type="text" id="phone" name="phone" placeholder="Nhập số điện thoại" required/>
+            </div>
+
+            <!-- Tóm tắt đơn hàng -->
+            <div class="order-summary">
+                <h3>Chi tiết đơn hàng</h3>
+                <ul>
+                    <li th:each="item : ${order.items}">
+                        <span th:text="${item.productVariant.product.name}">Tên sản phẩm</span> -
+                        <span th:text="'Size: ' + ${item.productVariant.size} + ', Màu: ' + ${item.productVariant.color}">Thuộc tính</span>
+                        -
+                        <span th:text="${item.quantity}">1</span> cái -
+                        <span th:text="${#numbers.formatDecimal(item.price, 0, 'COMMA', 0, 'POINT')} + ' VNĐ'">Giá</span>
+                    </li>
+                </ul>
+
+                <p><strong>Tổng tiền:</strong>
+                    <span th:text="${#numbers.formatDecimal(order.totalAmount, 0, 'COMMA', 0, 'POINT')} + ' VNĐ'"></span>
+                </p>
+            </div>
+
+            <!-- Phương thức thanh toán -->
+            <div class="payment-method">
+                <h3>Chọn phương thức thanh toán:</h3>
+                <label>
+                    <input type="radio" name="paymentMethod" value="COD" checked/>
+                    Thanh toán khi nhận hàng
+                </label>
+                <label>
+                    <input type="radio" name="paymentMethod" value="VNPAY"/>
+                    Thanh toán online qua VNPAY
+                </label>
+            </div>
+
+            <button type="submit" class="btn confirm-order">Xác nhận đặt hàng</button>
+        </form>
+    </section>
+</div>
+</body>
+</html>

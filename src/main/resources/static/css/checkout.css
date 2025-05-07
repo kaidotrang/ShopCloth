@@ -1,0 +1,100 @@
+/* Căn chỉnh chung cho trang thanh toán */
+.checkout-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.checkout-title {
+    text-align: center;
+    font-size: 24px;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+.checkout-form {
+    display: flex;
+    flex-direction: column;
+}
+
+.checkout-form label {
+    font-weight: bold;
+    margin-top: 10px;
+}
+
+.checkout-form input[type="text"] {
+    padding: 10px;
+    font-size: 16px;
+    margin: 8px 0;
+    border-radius: 4px;
+    border: 1px solid #ddd;
+}
+
+.checkout-form input[type="text"]:focus {
+    outline: none;
+    border-color: #007bff;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+}
+
+.shipping-info, .order-summary, .payment-method {
+    margin-bottom: 20px;
+}
+
+.order-summary ul {
+    list-style: none;
+    padding: 0;
+}
+
+.order-summary li {
+    font-size: 16px;
+    line-height: 1.5;
+}
+
+.payment-method input[type="radio"] {
+    margin-right: 10px;
+}
+
+.payment-method label {
+    display: block;
+    font-size: 16px;
+    margin-bottom: 10px;
+}
+
+.btn {
+    padding: 12px 20px;
+    background-color: #28a745;
+    color: white;
+    font-size: 18px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    text-align: center;
+    margin-top: 20px;
+}
+
+.btn:hover {
+    background-color: #218838;
+}
+
+.confirm-order {
+    display: block;
+    width: 100%;
+}
+
+@media (max-width: 768px) {
+    .checkout-container {
+        padding: 15px;
+    }
+
+    .checkout-title {
+        font-size: 20px;
+    }
+
+    .checkout-form input[type="text"] {
+        font-size: 14px;
+    }
+}

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/layout}">
+
+<head>
+    <title>Giỏ hàng</title>
+    <link rel="stylesheet" th:href="@{/css/cart.css}">
+</head>
+
+<body>
+<div layout:fragment="content">
+    <section class="cart-section">
+        <h2 class="cart-title">🛒 Giỏ hàng của bạn</h2>
+        <p th:if="${param.empty}" style="color:red; font-weight: bold;">Giỏ hàng của bạn đang trống!</p>
+        <table class="cart-table">
+            <thead>
+            <tr>
+                <th>Sản phẩm</th>
+                <th>Phiên bản</th>
+                <th>Số lượng</th>
+                <th>Giá</th>
+                <th>Thành tiền</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="item : ${cartItems}">
+                <td th:text="${item.productVariant.product.name}">Tên sản phẩm</td>
+                <td th:text="'Size: ' + ${item.productVariant.size} + ', Màu: ' + ${item.productVariant.color}">
+                    Size + Màu
+                </td>
+                <td th:text="${item.quantity}">1</td>
+                <td th:text="${item.productVariant.price} + ' VNĐ'">1 VNĐ</td>
+                <td th:text="${item.productVariant.price * item.quantity} + ' VNĐ'">0 VNĐ</td>
+            </tbody>
+        </table>
+
+        <div class="cart-summary">
+            <form th:action="@{/order/placeFromCart}" method="post">
+                <button type="submit" class="btn checkout-btn">Thanh toán</button>
+            </form>
+        </div>
+    </section>
+</div>
+
+<div layout:fragment="scripts">
+    <script th:src="@{/js/cart.js}"></script>
+</div>
+</body>
+</html>

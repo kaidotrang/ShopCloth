@@ -1,4 +1,4 @@
-package com.nguyenhuutruong.ShopCloth.service.impl;
+package com.nguyenhuutruong.ShopCloth.service;
 
 import com.nguyenhuutruong.ShopCloth.model.Category;
 

@@ -1,7 +1,7 @@
 package com.nguyenhuutruong.ShopCloth.controller;
 
 import com.nguyenhuutruong.ShopCloth.model.Product;
-import com.nguyenhuutruong.ShopCloth.service.impl.ProductService;
+import com.nguyenhuutruong.ShopCloth.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

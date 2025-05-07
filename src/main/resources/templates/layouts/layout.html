@@ -1,25 +1,36 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
 <head>
     <meta charset="UTF-8">
     <title layout:title-pattern="Shop Quần Áo">Shop Quần Áo</title>
     <link rel="stylesheet" th:href="@{/css/style.css}">
 </head>
+
 <body>
 <header>
     <div class="container">
         <h1><a th:href="@{/}">Shop Quần Áo</a></h1>
         <nav>
             <a th:href="@{/products}">Sản phẩm</a>
-            <a th:href="@{/cart}">Giỏ hàng</a>
-            <a th:href="@{/login}">Đăng nhập</a>
+            <a th:href="@{/cart/view}">Giỏ hàng</a>
+
+            <!-- Nếu chưa đăng nhập -->
+            <a th:href="@{/login}" sec:authorize="!isAuthenticated()">Đăng nhập</a>
+
+            <!-- Nếu đã đăng nhập -->
+            <span sec:authorize="isAuthenticated()">
+                <span>Xin chào, <span sec:authentication="name"></span>!</span>
+                <a th:href="@{/logout}">Đăng xuất</a>
+            </span>
         </nav>
     </div>
 </header>
 
 <main layout:fragment="content">
-    <!-- Nội dung từng trang sẽ được thay ở đây -->
+    <!-- Nội dung từng trang sẽ được chèn ở đây -->
 </main>
 
 <div layout:fragment="scripts"></div>
